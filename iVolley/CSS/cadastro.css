@@ -1,0 +1,50 @@
+.cadastro-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+}
+
+.cadastro-container h1 {
+    margin-bottom: 20px;
+    color: #d99973;
+}
+
+.cadastro-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cadastro-container label {
+    text-align: left;
+    font-weight: bold;
+}
+
+.cadastro-container input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.cadastro-container button {
+    padding: 10px;
+    background: #d99973;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cadastro-container button:hover {
+    background:#d99973;
+}
+
+.cadastro-container .login-link {
+    margin-top: 10px;
+    font-size: 14px;
+}
