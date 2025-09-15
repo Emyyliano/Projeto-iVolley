@@ -1,77 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ivolley</title>
-  <link rel="stylesheet" href="/CSS/index.css" />
-  <link rel="stylesheet" href="/CSS/nav.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iVolley - Escolha de Perfil</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-
 <body>
-  <header>
-    <div class="header">
-      <nav>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="time.html">Time</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="cadastro.html">Cadastro</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <main>
-    <section class="boas-vindas">
-      <h1>Bem-vindo ao <span>Ivolley</span></h1>
-      <p>
-        Este site foi criado para gerenciar o nosso time de vôlei escolar.
-        Aqui você pode conhecer os jogadores, suas posições em quadra e muito mais!
-      </p>
-    </section>
+    <header class="top-bar"></header>
 
-    <section class="convite">
-      <h2>Venha conferir nosso time!</h2>
-      <div class="cards-container">
-        <div class="card">
-          <img src="/JOGADORES/pedro.jpg" alt="Pedro Fragoso">
-          <h3>Pedro Fragoso</h3>
-          <p>Levantador</p>
+    <main>
+        <h1>Quem é você?</h1>
+        <div class="perfil-box">
+            <a href="#" onclick="selecionarPerfil('professor')" class="perfil">
+                <span class="material-icons">person</span>
+                <p>PROFESSOR</p>
+            </a>
+            <a href="#" onclick="selecionarPerfil('aluno')" class="perfil">
+                <span class="material-icons">person</span>
+                <p>ATLETA</p>
+            </a>
         </div>
-
-        <div class="card">
-          <img src="/JOGADORES/ryan.jpg" alt="Ryan Angelim">
-          <h3>Ryan Angelim</h3>
-          <p>Ponteiro</p>
-        </div>
-
-        <div class="card">
-          <img src="/JOGADORES/lucas.jpg" alt="Lucas">
-          <h3>Lucas</h3>
-          <p>Oposto</p>
-        </div>
-
-        <div class="card">
-          <img src="/JOGADORES/iago.png" alt="Iago">
-          <h3>Iago</h3>
-          <p>Ponteiro</p>
-        </div>
-
-        <div class="card">
-          <img src="/JOGADORES/jl.jpg" alt="João Luiz">
-          <h3>João Luiz</h3>
-          <p>Líbero</p>
-        </div>
-
-        <div class="card">
-          <img src="img/jogador6.jpg" alt="Gabriel Dias">
-          <h3>Gabriel Dias</h3>
-          <p>Central</p>
-        </div>
-      </div>
-    </section>
-  </main>
+    </main>
+    <script>
+        function selecionarPerfil(tipo) {
+            localStorage.setItem('perfilSelecionado', tipo);
+            window.location.href = '/html/login.html';
+        }
+    </script>
 </body>
-
 </html>

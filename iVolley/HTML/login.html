@@ -2,45 +2,43 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="/CSS/login.css" />
-    <link rel="stylesheet" href="/CSS/nav.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iVolley - Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <div class="header">
-            <nav>
-                <ul>
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="time.html">Time</a></li>
-                    <li><a href="login.html" class="ativo">Login</a></li>
-                    <li><a href="cadastro.html">Cadastro</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <header class="top-bar"></header>
+
     <main>
-        <div class="container">
-            <div class="card">
-                <h1>Login</h1>
-                <form>
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="email" required />
+        <a href="/html/index.html" class="back-btn">
+            <span class="material-icons">arrow_back</span>
+            Voltar
+        </a>
 
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" required />
+        <h1>Bem vindo ao <span>iVolley</span></h1>
+        <h2>Login</h2>
 
-                    <button type="submit">Entrar</button>
-                    <p class="cadastro-link">
-                        Não tem conta? <a href="cadastro.html">Cadastrar</a>
-                    </p>
-                </form>
-            </div>
+        <div class="login-box">
+            <form>
+                <label for="matricula">Matricula</label>
+                <input type="text" id="matricula" placeholder="123456789">
+
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" placeholder="*****">
+
+                <button type="submit" class="btn">Entrar</button>
+
+                <p class="cadastro">
+                    Ainda não fez o cadastro? <a id="cadastroLink" href="/html/cadastro.html">Clique aqui</a>
+                </p>
+            </form>
         </div>
     </main>
+    <script src="/js/index.js"></script>
+    <script src="/js/login.js"></script>
 </body>
 
 </html>

@@ -1,72 +1,71 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
+/* index.css */
+
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-main {
-  padding: 100px 20px 40px; 
+body {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px; /* Para acomodar a barra superior */
+}
+
+/* Barra superior laranja */
+.top-bar {
+  width: 100%;
+  height: 60px;
+  background-color: #ff5a00;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+h1 {
+  margin-top: 50px;
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
   text-align: center;
 }
 
-.boas-vindas h1 {
-  font-size: 2.2rem;
-  color: #333;
+.perfil-box {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row; /* Corrigido para alinhar lado a lado */
+  gap: 40px;
+  align-items: center;
 }
 
-.boas-vindas h1 span {
-  color: #d99973;
-}
-
-.boas-vindas p {
-  max-width: 700px;
-  margin: 15px auto 40px;
-  color: #555;
-  font-size: 1.1rem;
-}
-
-
-.convite h2 {
-  margin-bottom: 20px;
-  color: #d99973;
-}
-
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  justify-items: center;
-}
-
-.card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 15px;
-  width: 220px;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-}
-
-.card img {
-  width: 100%;
-  height: 180px;
+.perfil {
+  display: flex;
+  flex-direction: column; /* Alinha o ícone e o texto verticalmente */
+  align-items: center;
+  gap: 15px;
+  background-color: #f3f3f3;
+  border: 2px solid #ddd;
+  padding: 30px 40px;
   border-radius: 8px;
-  object-fit: cover;
-}
-
-.card h3 {
-  margin: 10px 0 5px;
-  color: #333;
-}
-
-.card p {
-  margin: 0;
-  color: #777;
+  text-decoration: none;
+  color: black;
   font-weight: bold;
+  width: 200px; /* Largura fixa para manter a consistência */
+  text-align: center;
+  transition: 0.3s;
+}
+
+.perfil:hover {
+  border-color: #ff5a00;
+  background-color: #fff0e9;
+  transform: translateY(-5px); /* Efeito de elevação sutil */
+}
+
+.perfil .material-icons {
+  font-size: 48px;
+  color: #ff5a00; /* Corrigido para o tom de laranja do iVolley */
 }
