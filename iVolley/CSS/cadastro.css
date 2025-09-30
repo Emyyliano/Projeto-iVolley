@@ -1,4 +1,3 @@
-/* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -13,14 +12,12 @@ body {
   align-items: center;
 }
 
-/* Barra superior laranja */
 .top-bar {
   width: 100%;
   height: 60px;
   background-color: #f86e38;
 }
 
-/* Títulos */
 h1 {
   margin-top: 40px;
   font-size: 28px;
@@ -37,7 +34,6 @@ h2 {
   color: #f86e38;
 }
 
-/* Caixa de login/cadastro */
 .login-box {
   background-color: #f8f8f8;
   border: 4px solid #f86e38;
@@ -60,7 +56,6 @@ h2 {
   border-radius: 2px;
 }
 
-/* Botão */
 .btn {
   margin-top: 20px;
   width: 100%;
@@ -78,7 +73,6 @@ h2 {
   background-color: #d95c2f;
 }
 
-/* Link */
 .cadastro {
   text-align: center;
   margin-top: 20px;
