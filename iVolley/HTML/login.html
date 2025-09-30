@@ -7,6 +7,26 @@
     <title>iVolley - Login</title>
     <link rel="stylesheet" href="/css/login.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBf0nqrJjqEslpsau46Au1BGvX5lPEI9Xw",
+            authDomain: "ivolley-536ca.firebaseapp.com",
+            projectId: "ivolley-536ca",
+            storageBucket: "ivolley-536ca.firebasestorage.app",
+            messagingSenderId: "535273707182",
+            appId: "1:535273707182:web:818d485b994f684d8abf3f",
+            measurementId: "G-833D6KENSH",
+            databaseURL: "https://ivolley-536ca-default-rtdb.firebaseio.com"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        auth = firebase.auth();
+        database = firebase.database();
+    </script>
 </head>
 
 <body>

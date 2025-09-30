@@ -1,32 +1,51 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const perfilSelecionado = localStorage.getItem('perfilSelecionado')
     const loginForm = document.querySelector('form')
+    const perfilSelecionado = localStorage.getItem('perfilSelecionado')
     const tituloLogin = document.querySelector('h1')
 
     if (perfilSelecionado) {
         tituloLogin.textContent = `Login de ${perfilSelecionado.charAt(0).toUpperCase() + perfilSelecionado.slice(1)}`
     }
 
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault()
 
-        const matricula = document.getElementById('matricula').value
-        const senha = document.getElementById('senha').value
+        const matriculaInput = document.getElementById('matricula').value
+        const senhaInput = document.getElementById('senha').value
 
-        const usuariosCadastrados = JSON.parse(localStorage.getItem('usuariosCadastrados')) || []
+        try {
+            const snapshot = await database.ref('usuarios').once('value')
+            const usuarios = snapshot.val()
+            let usuarioEncontrado = null
+            let emailDoUsuario = null
 
-        const usuarioAutenticado = usuariosCadastrados.find(user => 
-            user.matricula === matricula &&
-            user.senha === senha &&
-            user.tipo === perfilSelecionado
-        )
+            for (const uid in usuarios) {
+                if (usuarios[uid].matricula === matriculaInput && usuarios[uid].tipo === perfilSelecionado) {
+                    usuarioEncontrado = usuarios[uid]
+                    emailDoUsuario = usuarios[uid].email
+                    break
+                }
+            }
+            
+            if (!usuarioEncontrado) {
+                alert("Matrícula não encontrada ou perfil inválido!")
+                return
+            }
 
-        if (usuarioAutenticado) {
-            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioAutenticado))
+            const userCredential = await auth.signInWithEmailAndPassword(emailDoUsuario, senhaInput)
+            const user = userCredential.user
+
+            localStorage.setItem("usuarioLogado", JSON.stringify(usuarioEncontrado))
             localStorage.removeItem('perfilSelecionado')
             window.location.href = '/html/inicio.html'
-        } else {
-            alert('Dados de login incorretos ou perfil inválido!')
+            
+        } catch (error) {
+            console.error("Erro no login:", error)
+            if (error.code === 'auth/wrong-password') {
+                alert("Senha incorreta.")
+            } else {
+                alert("Erro ao fazer login: " + error.message)
+            }
         }
     })
 })

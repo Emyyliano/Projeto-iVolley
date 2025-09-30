@@ -31,6 +31,7 @@ body {
     border-radius: 50%;
     border: 2px solid #ddd;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* Estas regras garantem que a imagem caiba perfeitamente no círculo */
     object-fit: cover;
     object-position: center;
 }

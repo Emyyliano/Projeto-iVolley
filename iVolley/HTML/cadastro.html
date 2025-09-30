@@ -6,8 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iVolley - Cadastro</title>
     <link rel="stylesheet" href="/css/cadastro.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBf0nqrJjqEslpsau46Au1BGvX5lPEI9Xw",
+            authDomain: "ivolley-536ca.firebaseapp.com",
+            projectId: "ivolley-536ca",
+            storageBucket: "ivolley-536ca.firebasestorage.app",
+            messagingSenderId: "535273707182",
+            appId: "1:535273707182:web:818d485b994f684d8abf3f",
+            measurementId: "G-833D6KENSH",
+            databaseURL: "https://ivolley-536ca-default-rtdb.firebaseio.com"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        auth = firebase.auth();
+        database = firebase.database();
+    </script>
 </head>
-    
+
 <body>
     <header class="top-bar"></header>
 
@@ -16,12 +36,21 @@
         <h2>Cadastro</h2>
 
         <div class="login-box">
-            <form>
+            <form id="cadastroForm">
                 <label for="nome">Como quer ser chamado?</label>
                 <input type="text" id="nome" placeholder="Digite seu nome">
 
                 <label for="email">E-mail Institucional</label>
                 <input type="email" id="email" placeholder="seuemail@aluno.ifce.edu.br">
+                
+                <div class="input-group">
+                    <label for="tipo">Tipo de Usuário:</label>
+                    <select id="tipo" required>
+                        <option value="">Selecione...</option>
+                        <option value="professor">Professor</option>
+                        <option value="aluno">Atleta</option>
+                    </select>
+                </div>
 
                 <label for="matricula">Matrícula</label>
                 <input type="text" id="matricula" placeholder="123456789">
@@ -41,7 +70,7 @@
         </div>
     </main>
     <script src="/js/cadastro.js"></script>
-    
+
 </body>
 
 </html>

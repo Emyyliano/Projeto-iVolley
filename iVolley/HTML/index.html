@@ -13,17 +13,18 @@
     <main>
         <h1>Quem é você?</h1>
         <div class="perfil-box">
-            <a href="#" onclick="selecionarPerfil('professor')" class="perfil">
+            <a onclick="selecionarPerfil('professor')" class="perfil">
                 <span class="material-icons">person</span>
                 <p>PROFESSOR</p>
             </a>
-            <a href="#" onclick="selecionarPerfil('aluno')" class="perfil">
+            <a onclick="selecionarPerfil('aluno')" class="perfil">
                 <span class="material-icons">person</span>
                 <p>ATLETA</p>
             </a>
         </div>
     </main>
     <script>
+        // Esta função será chamada ao clicar em um dos perfis
         function selecionarPerfil(tipo) {
             localStorage.setItem('perfilSelecionado', tipo);
             window.location.href = '/html/login.html';

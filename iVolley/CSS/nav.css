@@ -66,6 +66,8 @@
     border-radius: 50%;
     border: 2px solid #ff5a00;
 }
+/* nav.css */
+/* ... código anterior ... */
 
 .user-profile {
     display: flex;
@@ -99,4 +101,19 @@
 .logout-btn:hover {
     background-color: #ff5a00;
     color: #ffffff;
+}
+.notificar-btn {
+    background-color: #4CAF50; /* Um verde que lembra o WhatsApp */
+    border: 2px solid #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.notificar-btn:hover {
+    background-color: #45a049;
+    border-color: #45a049;
 }

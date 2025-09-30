@@ -13,162 +13,234 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navNomeUsuario) navNomeUsuario.textContent = usuario.nome
     if (mainNomeUsuario) mainNomeUsuario.textContent = usuario.nome
 
-    if (usuario.tipo === "professor") {
-        document.querySelectorAll(".list-item").forEach(item => {
-            const btnEditar = document.createElement("button")
-            btnEditar.textContent = "Editar"
-            btnEditar.classList.add("btn-editar")
-            item.appendChild(btnEditar)
-        })
+    const modal = document.getElementById('add-modal')
+    const modalForm = document.getElementById('modal-form')
+    const modalTitle = document.getElementById('modal-title')
+    const modalFields = document.getElementById('modal-fields')
+    const cancelBtn = document.getElementById('cancel-btn')
+    let currentItemType = ''
 
-        document.querySelectorAll(".player-item").forEach(item => {
-            const btnEditar = document.createElement("button")
-            btnEditar.textContent = "Editar"
-            btnEditar.classList.add("btn-editar")
-            item.appendChild(btnEditar)
-        })
-
-        const treinosSection = document.querySelector(".treinos-section")
-        const jogosSection = document.querySelector(".jogos-section")
-        const jogadoresSection = document.querySelector(".jogadores-section")
-
-        const btnAdicionarTreino = document.createElement("button")
-        btnAdicionarTreino.textContent = "Adicionar treino"
-        btnAdicionarTreino.classList.add("btn-adicionar")
-        treinosSection.appendChild(btnAdicionarTreino)
-
-        const btnAdicionarJogador = document.createElement("button")
-        btnAdicionarJogador.textContent = "Adicionar jogador"
-        btnAdicionarJogador.classList.add("btn-adicionar")
-        jogadoresSection.appendChild(btnAdicionarJogador)
-
-        const btnAdicionarJogo = document.createElement("button")
-        btnAdicionarJogo.textContent = "Adicionar jogo"
-        btnAdicionarJogo.classList.add("btn-adicionar")
-        jogosSection.appendChild(btnAdicionarJogo)
-
-        function adicionarFuncionalidadeEditar(btn) {
-            btn.addEventListener("click", () => {
-                const itemParaEditar = btn.closest('li, .list-item, .player-item')
-                const secaoPai = btn.closest('section')
-                
-                if (secaoPai.classList.contains('treinos-section') || secaoPai.classList.contains('jogos-section')) {
-                    const nome = itemParaEditar.querySelector('h3')
-                    const [data, local] = itemParaEditar.querySelectorAll('p')
-
-                    const novoNome = prompt("Novo nome (ex: Masculino):", nome.textContent)
-                    const novaData = prompt("Nova data (ex: 18/09):", data.textContent)
-                    const novoLocal = prompt("Novo local (ex: 17:00 Quadra IFCE):", local.textContent)
-
-                    if (novoNome !== null) nome.textContent = novoNome
-                    if (novaData !== null) data.textContent = novaData
-                    if (novoLocal !== null) local.textContent = novoLocal
-                    
-                    alert("Informações atualizadas!")
-
-                } else if (secaoPai.classList.contains('jogadores-section')) {
-                    const nome = itemParaEditar.querySelector('h3')
-                    const posicao = itemParaEditar.querySelector('p')
-                    
-                    const novoNome = prompt("Novo nome do jogador:", nome.textContent)
-                    const novaPosicao = prompt("Nova posição (ex: Levantador):", posicao.textContent)
-
-                    if (novoNome !== null) nome.textContent = novoNome
-                    if (novaPosicao !== null) posicao.textContent = novaPosicao
-                    
-                    alert("Informações atualizadas!")
-                }
-            })
+    const showModal = (itemType) => {
+        currentItemType = itemType
+        modal.style.display = 'flex'
+        modalTitle.textContent = `Adicionar ${itemType.charAt(0).toUpperCase() + itemType.slice(1)}`
+        modalFields.innerHTML = ''
+        let fieldsHTML = ''
+        if (itemType === 'treino' || itemType === 'jogo') {
+            fieldsHTML = `
+                <label for="time">Time:</label>
+                <input type="text" id="time" required>
+                <label for="data">Data:</label>
+                <input type="text" id="data" required>
+                <label for="local">Local e Horário:</label>
+                <input type="text" id="local" required>
+            `
+        } else if (itemType === 'jogador') {
+            fieldsHTML = `
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" required>
+                <label for="posicao">Posição:</label>
+                <input type="text" id="posicao" required>
+            `
         }
+        modalFields.innerHTML = fieldsHTML
+    }
+
+    const hideModal = () => {
+        modal.style.display = 'none'
+        modalForm.reset()
+    }
+
+    cancelBtn.addEventListener('click', hideModal)
+
+    modalForm.addEventListener('submit', async (e) => {
+        e.preventDefault()
         
-        document.querySelectorAll(".btn-editar").forEach(adicionarFuncionalidadeEditar)
+        let newData = {}
+        let databaseRef = ''
 
-        const adicionarBotoes = document.querySelectorAll(".btn-adicionar")
-        adicionarBotoes.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const secaoPai = btn.closest('section')
-                
-                if (secaoPai.classList.contains('treinos-section')) {
-                    const nome = prompt("Nome do treino (ex: Masculino):")
-                    const data = prompt("Data do treino (ex: 25/10):")
-                    const local = prompt("Local e horário (ex: 17:00 às 18:30 Quadra IFCE):")
+        if (currentItemType === 'treino' || currentItemType === 'jogo') {
+            const time = document.getElementById('time').value
+            const data = document.getElementById('data').value
+            const local = document.getElementById('local').value
+            newData = { time, data, local }
+            databaseRef = (currentItemType === 'treino') ? 'treinos' : 'jogos'
+        } else if (currentItemType === 'jogador') {
+            const nome = document.getElementById('nome').value
+            const posicao = document.getElementById('posicao').value
+            newData = { nome, posicao }
+            databaseRef = 'jogadores'
+        }
 
-                    if (nome && data && local) {
-                        const newTreino = document.createElement('div')
-                        newTreino.classList.add('list-item')
-                        const btnEditar = document.createElement("button")
-                        btnEditar.textContent = "Editar"
-                        btnEditar.classList.add("btn-editar")
-                        adicionarFuncionalidadeEditar(btnEditar)
-                        
-                        newTreino.innerHTML = `
-                            <span class="bullet"></span>
-                            <div class="item-content">
-                                <h3>${nome}</h3>
-                                <p>${data}</p>
-                                <p>${local}</p>
-                            </div>
-                        `
-                        newTreino.appendChild(btnEditar)
-                        secaoPai.querySelector('.list-item').insertAdjacentElement('beforebegin', newTreino)
-                        alert("Novo treino adicionado!")
-                    }
-                } else if (secaoPai.classList.contains('jogadores-section')) {
-                    const nome = prompt("Nome do jogador:")
-                    const posicao = prompt("Posição do jogador:")
+        try {
+            await database.ref(databaseRef).push(newData)
+            alert("Item adicionado com sucesso!")
+            hideModal()
+            carregarDados()
+        } catch (error) {
+            console.error("Erro ao adicionar item:", error)
+            alert("Erro ao adicionar item.")
+        }
+    })
 
-                    if (nome && posicao) {
-                        const newJogador = document.createElement('div')
-                        newJogador.classList.add('player-item')
-                        const btnEditar = document.createElement("button")
-                        btnEditar.textContent = "Editar"
-                        btnEditar.classList.add("btn-editar")
-                        adicionarFuncionalidadeEditar(btnEditar)
-                        
-                        newJogador.innerHTML = `
-                            <div class="player-photo"></div>
-                            <div class="player-info">
-                                <h3>${nome}</h3>
-                                <p>${posicao}</p>
-                                <hr>
-                            </div>
-                        `
-                        newJogador.appendChild(btnEditar)
-                        secaoPai.querySelector('.player-list').appendChild(newJogador)
-                        alert("Novo jogador adicionado!")
-                    }
-                } else if (secaoPai.classList.contains('jogos-section')) {
-                    const nome = prompt("Nome do jogo:")
-                    const data = prompt("Data do jogo:")
-                    const local = prompt("Local e horário:")
-                    
-                    if (nome && data && local) {
-                        const newJogo = document.createElement('div')
-                        newJogo.classList.add('list-item')
-                        const btnEditar = document.createElement("button")
-                        btnEditar.textContent = "Editar"
-                        btnEditar.classList.add("btn-editar")
-                        adicionarFuncionalidadeEditar(btnEditar) 
-                        
-                        newJogo.innerHTML = `
-                            <span class="bullet"></span>
-                            <div class="item-content">
-                                <h3>${nome}</h3>
-                                <p>${data}</p>
-                                <p>${local}</p>
-                            </div>
-                        `
-                        newJogo.appendChild(btnEditar)
-                        secaoPai.querySelector('.list-item').insertAdjacentElement('beforebegin', newJogo)
-                        alert("Novo jogo adicionado!")
-                    }
+    const carregarDados = () => {
+        const treinosList = document.querySelector('.treinos-section .list-container')
+        const jogadoresList = document.querySelector('.jogadores-section .player-list-container')
+        const jogosList = document.querySelector('.jogos-section .list-container')
+    
+        if (treinosList) treinosList.innerHTML = ''
+        if (jogadoresList) jogadoresList.innerHTML = ''
+        if (jogosList) jogosList.innerHTML = ''
+
+        database.ref('treinos').on('value', snapshot => {
+            snapshot.forEach(childSnapshot => {
+                const treino = childSnapshot.val()
+                const treinoElement = document.createElement('div')
+                treinoElement.classList.add('list-item')
+                treinoElement.setAttribute('data-id', childSnapshot.key)
+                treinoElement.innerHTML = `
+                    <span class="bullet"></span>
+                    <div class="item-content">
+                        <h3>${treino.time}</h3>
+                        <p>${treino.data}</p>
+                        <p>${treino.local}</p>
+                    </div>
+                `
+                if (usuario.tipo === "professor") {
+                    treinoElement.innerHTML += `
+                        <div class="item-actions">
+                            <button onclick="editarItem('treinos', '${childSnapshot.key}')" class="btn-editar">Editar</button>
+                            <button onclick="excluirItem('treinos', '${childSnapshot.key}')" class="btn-excluir">Excluir</button>
+                        </div>
+                    `
                 }
+                if (treinosList) treinosList.appendChild(treinoElement)
+            })
+        })
+        
+        database.ref('jogadores').on('value', snapshot => {
+            snapshot.forEach(childSnapshot => {
+                const jogador = childSnapshot.val()
+                const jogadorElement = document.createElement('div')
+                jogadorElement.classList.add('player-item')
+                jogadorElement.setAttribute('data-id', childSnapshot.key)
+                jogadorElement.innerHTML = `
+                    <div class="player-photo"></div>
+                    <div class="player-info">
+                        <h3>${jogador.nome}</h3>
+                        <p>${jogador.posicao}</p>
+                        <hr>
+                    </div>
+                `
+                if (usuario.tipo === "professor") {
+                    jogadorElement.innerHTML += `
+                        <div class="item-actions">
+                            <button onclick="editarItem('jogadores', '${childSnapshot.key}')" class="btn-editar">Editar</button>
+                            <button onclick="excluirItem('jogadores', '${childSnapshot.key}')" class="btn-excluir">Excluir</button>
+                        </div>
+                    `
+                }
+                if (jogadoresList) jogadoresList.appendChild(jogadorElement)
+            })
+        })
+
+        database.ref('jogos').on('value', snapshot => {
+            snapshot.forEach(childSnapshot => {
+                const jogo = childSnapshot.val()
+                const jogoElement = document.createElement('div')
+                jogoElement.classList.add('list-item')
+                jogoElement.setAttribute('data-id', childSnapshot.key)
+                jogoElement.innerHTML = `
+                    <span class="bullet"></span>
+                    <div class="item-content">
+                        <h3>${jogo.time}</h3>
+                        <p>${jogo.data}</p>
+                        <p>${jogo.local}</p>
+                    </div>
+                `
+                if (usuario.tipo === "professor") {
+                    jogoElement.innerHTML += `
+                        <div class="item-actions">
+                            <button onclick="editarItem('jogos', '${childSnapshot.key}')" class="btn-editar">Editar</button>
+                            <button onclick="excluirItem('jogos', '${childSnapshot.key}')" class="btn-excluir">Excluir</button>
+                        </div>
+                    `
+                }
+                if (jogosList) jogosList.appendChild(jogoElement)
             })
         })
     }
-})
 
-function logout() {
-    localStorage.removeItem("usuarioLogado")
-    window.location.href = "/html/login.html"
-}
+    carregarDados()
+
+    if (usuario.tipo === "professor") {
+        document.querySelector(".btn-adicionar").addEventListener("click", () => showModal('treino'))
+        document.querySelector(".btn-adicionar-jogador").addEventListener("click", () => showModal('jogador'))
+        document.querySelector(".jogos-section .btn-adicionar").addEventListener("click", () => showModal('jogo'))
+    } else {
+        document.querySelectorAll(".btn-adicionar, .btn-adicionar-jogador").forEach(btn => {
+            btn.style.display = 'none'
+        })
+    }
+
+    function editarItem(secao, itemId) {
+        let ref
+        let newValues = {}
+    
+        if (secao === 'jogadores') {
+            const nome = prompt("Novo nome do jogador:")
+            const posicao = prompt("Nova posição do jogador:")
+            if (nome) newValues.nome = nome
+            if (posicao) newValues.posicao = posicao
+            ref = database.ref(`jogadores/${itemId}`)
+        } else if (secao === 'jogos') {
+            const time = prompt("Novo time (ex: Masculino):")
+            const data = prompt("Nova data (ex: 25/10):")
+            const local = prompt("Novo local e horário:")
+            if (time) newValues.time = time
+            if (data) newValues.data = data
+            if (local) newValues.local = local
+            ref = database.ref(`jogos/${itemId}`)
+        } else if (secao === 'treinos') {
+            const time = prompt("Novo time (ex: Masculino):")
+            const data = prompt("Nova data (ex: 25/10):")
+            const local = prompt("Novo local e horário:")
+            if (time) newValues.time = time
+            if (data) newValues.data = data
+            if (local) newValues.local = local
+            ref = database.ref(`treinos/${itemId}`)
+        }
+    
+        if (Object.keys(newValues).length > 0) {
+            ref.update(newValues)
+                .then(() => alert("Item editado com sucesso!"))
+                .catch(error => console.error("Erro ao editar item:", error))
+        }
+    }
+
+    function excluirItem(secao, itemId) {
+        if (confirm("Tem certeza que deseja excluir este item?")) {
+            let ref
+            if (secao === 'jogadores') {
+                ref = database.ref(`jogadores/${itemId}`)
+            } else if (secao === 'jogos') {
+                ref = database.ref(`jogos/${itemId}`)
+            } else if (secao === 'treinos') {
+                ref = database.ref(`treinos/${itemId}`)
+            }
+
+            ref.remove()
+                .then(() => alert("Item excluído com sucesso!"))
+                .catch(error => console.error("Erro ao excluir item:", error))
+        }
+    }
+
+    function logout() {
+        auth.signOut().then(() => {
+            localStorage.removeItem("usuarioLogado")
+            window.location.href = "/html/login.html"
+        }).catch((error) => {
+            console.error("Erro ao fazer logout:", error)
+        })
+    }
+})

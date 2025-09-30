@@ -7,6 +7,26 @@
     <title>Início</title>
     <link rel="stylesheet" href="/css/inicio.css">
     <link rel="stylesheet" href="/css/nav.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBf0nqrJjqEslpsau46Au1BGvX5lPEI9Xw",
+            authDomain: "ivolley-536ca.firebaseapp.com",
+            projectId: "ivolley-536ca",
+            storageBucket: "ivolley-536ca.firebasestorage.app",
+            messagingSenderId: "535273707182",
+            appId: "1:535273707182:web:818d485b994f684d8abf3f",
+            measurementId: "G-833D6KENSH",
+            databaseURL: "https://ivolley-536ca-default-rtdb.firebaseio.com"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        auth = firebase.auth();
+        database = firebase.database();
+    </script>
 </head>
 
 <body>
@@ -26,6 +46,19 @@
     </header>
 
     <main>
+        <div id="add-modal" class="modal-overlay">
+            <div class="modal-content">
+                <h3 id="modal-title">Adicionar Jogador</h3>
+                <form id="modal-form">
+                    <div id="modal-fields">
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" id="cancel-btn">Cancelar</button>
+                        <button type="submit" id="save-btn">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="main-title">
             <h1>Bem-vindo <span id="main-nomeUsuario">[nome]</span> ao <span class="highlight">iVolley</span></h1>
         </div>
@@ -33,94 +66,23 @@
         <div class="container-grid">
             <section class="treinos-section">
                 <h2>Treinos</h2>
-                <div class="list-item">
-                    <span class="bullet"></span>
-                    <div class="item-content">
-                        <h3>Masculino</h3>
-                        <p>18/09</p>
-                        <p>17:00 às 18:30 Quadra IFCE</p>
-                    </div>
+                <div class="list-container">
                 </div>
-                <div class="list-item">
-                    <span class="bullet"></span>
-                    <div class="item-content">
-                        <h3>Feminino</h3>
-                        <p>19/09</p>
-                        <p>13:00 às 16:40 Quadra IFCE</p>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <span class="bullet"></span>
-                    <div class="item-content">
-                        <h3>Em breve</h3>
-                    </div>
-                </div>
+                <button class="btn-adicionar">Adicionar treino</button>
             </section>
 
             <section class="jogadores-section">
                 <h2>Jogadores</h2>
-                <div class="player-list">
-                    <div class="player-item">
-                        <div class="player-photo"></div>
-                        <div class="player-info">
-                            <h3>Ryan Angelim</h3>
-                            <p>Ponteiro</p>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="player-item">
-                        <div class="player-photo"></div>
-                        <div class="player-info">
-                            <h3>Pedro Fragoso</h3>
-                            <p>Levantador</p>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="player-item">
-                        <div class="player-photo"></div>
-                        <div class="player-info">
-                            <h3>Henrique</h3>
-                            <p>Central</p>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="player-item">
-                        <div class="player-photo"></div>
-                        <div class="player-info">
-                            <h3>Lucas Sousa</h3>
-                            <p>Oposto</p>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="player-item">
-                        <div class="player-photo"></div>
-                        <div class="player-info">
-                            <h3>Iago</h3>
-                            <p>Ponteiro</p>
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="player-item">
-                        <div class="player-photo"></div>
-                        <div class="player-info">
-                            <h3>João Luiz</h3>
-                            <p>Líbero</p>
-                            <hr>
-                        </div>
-                    </div>
+                <div class="player-list-container">
                 </div>
+                <button class="btn-adicionar-jogador">Adicionar jogador</button>
             </section>
 
             <section class="jogos-section">
                 <h2>Jogos</h2>
-                <div class="list-item">
-                    <span class="bullet"></span>
-                    <div class="item-content">
-                        <h3>Masculino</h3>
-                        <p>29/09</p>
-                        <p>13:00 Quadra IFCE - Fortaleza</p>
-                    </div>
+                <div class="list-container">
                 </div>
+                <button class="btn-adicionar">Adicionar jogo</button>
             </section>
         </div>
     </main>
